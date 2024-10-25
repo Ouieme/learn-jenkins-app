@@ -1,28 +1,14 @@
 pipeline {
-    agent any
-
+    agent {
+        docker {
+            image 'node:18-alpine'
+            args '-v C:/ProgramData/Jenkins/.jenkins/workspace/pipeline-Vscode/:/workspace'
+        }
+    }
     stages {
         stage('Build') {
-            agent {
-                docker {
-                    image 'node:18-alpine'
-                    reuseNode true
-                }
-            }
             steps {
-                script {
-                    // Use WSL-compatible path
-                    sh '''
-                    echo "Current directory:"
-                    pwd
-                    ls -la
-                    node --version
-                    npm --version
-                    npm ci
-                    npm run build
-                    ls -la
-                    '''
-                }
+                sh 'cd /workspace && npm install'
             }
         }
     }
