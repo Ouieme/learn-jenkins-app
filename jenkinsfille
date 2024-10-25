@@ -1,14 +1,11 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:18-alpine'
-            args '-v C:/ProgramData/Jenkins/.jenkins/workspace/pipeline-Vscode/:/workspace'
-        }
-    }
+    agent any
     stages {
-        stage('Build') {
+        stage('Test Docker') {
             steps {
-                sh 'cd /workspace && npm install'
+                script {
+                    sh 'docker --version'  // Use 'bat' if on Windows
+                }
             }
         }
     }
